@@ -39,6 +39,7 @@ class Server(db.Model):
 	uptimecounter = db.IntegerProperty("Uptime Counter", default=0)
 	notifywithprowl = db.BooleanProperty("Prowl notifications",default=False)
 	notifywithemail = db.BooleanProperty("Email notifications",default=False)
+	notifywithxmpp = db.StringProperty("XMPP Address",multiline=False)
 	notifywithtwitter = db.BooleanProperty("Twitter notifications",default=False)
 	notifywithfacebook = db.BooleanProperty("Facebook notifications",default=False)
 	notifywithsms = db.BooleanProperty("SMS notifications",default=False)

@@ -49,7 +49,7 @@ Admin Panel
 <h3>Servers:</h3>
 <div id="adminserverlist">
 <table>
-<tr><td>Domain</td><td>SSL</td><td>Code</td><td>Uptime</td><td>Prowl</td><td>Email</td></tr>
+<tr><td>Domain</td><td>SSL</td><td>Code</td><td>Uptime</td><td>Prowl</td><td>Email</td><td>XMPP</td></tr>
 {% for server in serverlist %}
 <tr>
 <td>{{ server.serverdomain }}</td>
@@ -58,6 +58,7 @@ Admin Panel
 <td>{{ server.uptime }}</td>
 <td>{{ server.notifywithprowl }}</td>
 <td>{{ server.notifywithemail }}</td>
+<td>{{ server.notifywithxmpp }}</td>
 <td><form action="/admin/deleteserver" method="post">
 <input type="hidden" name="serverdomain" value={{ server.serverdomain }}>
 <input type="submit" value="Delete Server"></td>
@@ -81,6 +82,7 @@ Add more servers:
 <div id="entry">Notification methods:      
 Prowl <input type="checkbox" name="notifywithprowl" value="True" /><br/>
 Email <input type="checkbox" name="notifywithemail" value="True" /><br/>
+XMPP  <input type="text" name="notifywithxmpp" value="" /><br/>
 </div>
 <div id="button"><input type="submit" value="Add Server"></div>
 </form></fieldset>

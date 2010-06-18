@@ -34,6 +34,7 @@ import os
 from google.appengine.ext.webapp import template
 from google.appengine.ext import webapp
 from google.appengine.api import users
+from google.appengine.api import xmpp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 from google.appengine.ext.db import Key
@@ -71,6 +72,10 @@ class StoreServer(webapp.RequestHandler):
 			server.notifywithprowl = True
 		if self.request.get('notifywithemail') == "True":
 			server.notifywithemail = True
+		xmpp_address = self.request.get('notifywithxmpp')
+		if xmpp_address != "":
+			server.notifywithxmpp = xmpp_address
+			xmpp.send_invite(xmpp_address)
 		#server.notifywithprowl = self.request.get('notifywithtwitter')
 		server.email = users.get_current_user().email()
 		server.put()

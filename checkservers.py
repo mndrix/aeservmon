@@ -30,6 +30,7 @@ from google.appengine.api import users
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 from google.appengine.api import mail
+from google.appengine.api import xmpp
 from google.appengine.api.urlfetch import DownloadError
 
 import cgi
@@ -90,6 +91,8 @@ class CheckServers(webapp.RequestHandler):
 				self.notifyprowl(server)
 			if server.notifywithemail:
 				self.notifyemail(server)
+			if server.notifywithxmpp != None:
+				self.notifyxmpp(server)
 		else:
 			pass
 
@@ -122,6 +125,15 @@ class CheckServers(webapp.RequestHandler):
 		server.notifylimiter = True
 		server.put()
 					
+	def notifyxmpp(self,server):
+		address = server.notifywithxmpp
+		if xmpp.get_presence(address):
+			msg = "%s is down" % server.serverdomain
+			status_code = xmpp.send_message(address, msg)
+			if status_code == xmpp.NO_ERROR:
+				server.notifylimiter = True
+				server.put()
+
 	def notifytwitter(self,server):
 		pass
 		#api = twitter.Api(username="%s" % self.adminoptions.twitteruser , password="%s" % self.adminoptions.twitterpass)
